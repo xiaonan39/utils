@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag the playback(拖拽回放)</title>
+  <style>
+    *{
+      margin: 0;padding:0;
+    }
+    #box{
+      width: 400px;
+      height: 400px;
+      background: rgba(131,175,155,1);
+      box-shadow: 0 0 10px #333;
+      position: absolute;
+    }
+    #drag-bar{
+      height: 30px;
+      background: rgba(200,200,169,1);
+      text-align: right;
+    }
+    #btn{
+      width: 20%;
+      height: 100%;
+      background: rgba(249,205,173,1);
+    }
+  </style>
+</head>
+<body>
+  <div id = "box">
+    <div id="drag-bar"><button id="btn">回放</button></div>
+  </div>
+
+  <script>
+    /* 1、首先获取各个dom元素并定义需要用到的变量；
+      2、相应dom监听按下鼠标键的事件：如果点击的地方不对则return， 同时监听鼠标移动的事件
+      3、使盒子随着鼠标而改变位置，并记录该位置
+      4、监听鼠标键起的事件，删除之前的监听移动事件
+      5、相应dom监听click事件，获取之前的位置数组的长度并减减，当===0时删除定时器，让盒子的位置倒回至原本的位置*/
+      /* clientX、clientY
+      点击位置距离当前body可视区域的x，y坐标
+        pageX、pageY
+      对于整个页面来说，包括了被卷去的body部分的长度
+        screenX、screenY
+      点击位置距离当前电脑屏幕的x，y坐标
+        offsetX、offsetY
+      相对于带有定位的父盒子的x，y坐标*/
+    var box = document.getElementById("box");
+    var dragBar = document.getElementById("drag-bar");
+    var btn = document.getElementById("btn");
+    var offsetX = 0,offsetY = 0,positionArray = [];
+    dragBar.addEventListener("mousedown",handlerMouseDown);
+    function handlerMouseDown(e) {
+      var e = e || window.event;
+      if(e.target.nodeName === "BUTTON") {
+        return false;
+      }
+      offsetX = e.offsetX;
+      offsetY = e.offsetY;
+      document.addEventListener("mousemove",handlerMouseMove);
+    }
+    function handlerMouseMove(e) {
+      var e = e || window.event;
+      /* 不减去offsetX的话，在点击盒子的时候盒子的位置会发生偏移*/
+      var _left = e.clientX - offsetX;
+      var _top = e.clientY - offsetY;
+      box.style.left = _left + "px";
+      box.style.top = _top + "px";
+      positionArray.push({left:_left,top:_top});
+    }
+    document.addEventListener("mouseup",handlerMouseUp);
+    function handlerMouseUp(e) {
+      document.removeEventListener("mousemove",handlerMouseMove);
+    }
+    btn.addEventListener("click",handlerClick);
+    function handlerClick(e) {
+      var index = positionArray.length;
+      var timer = setInterval(function() {
+        if(index === 0) {
+          positionArray.length = 0;/* 不加此行的话在已经执行了回放功能后再次点击回放，依旧会执行之前的回放(第二次拖动后执行的回放会把第一次的轨迹再执行一次) */
+          return clearInterval(timer);
+        }
+        index--;
+        console.log(index);
+        box.style.left = positionArray[index].left + "px";
+        box.style.top = positionArray[index].top + "px";
+      },50)
+    }
+  </script>
+</body>
+</html>

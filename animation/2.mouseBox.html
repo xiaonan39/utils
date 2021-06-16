@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跟随鼠标移动的小方块</title>
+  <style>
+  #box {
+    width: 100px;
+    height: 100px;
+    background: palegreen;
+    position: absolute;
+    left: 0;
+    top:0;
+  }
+  </style>
+</head>
+<body>
+  <div id = "box"></div>
+
+  <script>
+    mouseBox();
+    function mouseBox() {
+      // 获取鼠标移动时的位置并赋值给小方块，记得鼠标的位置是在方块的中心；滚动时设置方块的位置；
+      let mouseClientX = 0;
+      let mouseClientY = 0;
+      document.onmousemove = function(e) {
+        var e = e || window.event;
+        box.style.left = e.pageX - 50 + "px";
+        box.style.top = e.pageY - 50 + "px";
+        mouseClientX = e.clientX;
+        mouseClientY = e.clientY;
+      }
+      onscroll = function() {
+        screenTop = document.body.scrollTop || document.documentElement.scrollTop;
+        box.style.left = mouseClientX - box.offsetWidth / 2 + "px";
+        box.style.top = mouseClientY - box.offsetHeight / 2 +scrollTop + "px";
+      }
+    }
+  </script>
+</body>
+</html>

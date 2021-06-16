@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ad vertisement(广告悬浮窗)</title>
+  <style>
+    body{
+      height: 3000px;
+    }
+    #right-bar{
+      position: absolute;
+      width: 100px;
+      height: 400px;
+      background: #ddd;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="right-bar"></div>
+  <script>
+    ceilingBar();
+    function ceilingBar() {
+      // 获取吸顶条，监听页面滚动的事件，设置定时器：滚动的高度-吸顶条自身的高度，让吸顶条以十分之一的速度移动？当吸顶条位于顶部时清楚定时器
+      var target = 0;
+      var timer = null;
+      var rightBar = document.getElementById("right-bar");
+      window.addEventListener("scroll",boxFixed);
+      function boxFixed() {
+        let self = document.body.scrollTop || document.documentElement.scrollTop;
+
+        // 若不四舍五入，滚动时框会一直抖动；
+        target = Math.round(self);
+        if(timer !== null) return false;
+        timer = setInterval(() => {
+          let distance = target - rightBar.offsetTop;
+          let speed = distance > 0 ? Math.ceil(distance/10) : Math.floor(distance/10);
+          rightBar.style.top = rightBar.offsetTop + speed + "px";
+          if(distance === 0) {
+            clearInterval(timer);
+            timer = null;
+          }
+        },50)
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+.triangleDown{width: 0;
+  height: 0;
+  display: inline-block;
+  border-top: 7px solid #000000;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+.triangleleft{
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 7px solid #000;
+}
+.triangleRight{
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid #000;
+}
+.triangleTop{
+  width: 0;
+  height: 0;
+  display: inline-block;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  border-bottom: 7px solid #000;
+}

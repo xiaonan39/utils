@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>html2canvas截屏</title>
+  <link rel="import" href="1.img.html" id="page1"/>
+  <style>
+    ul li {
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  
+  <ul id="oUl" style="float: left;">
+    <li>
+      <button class="screenCapture">截屏</button>
+    </li>
+    <!-- <li>
+      <img src="https://img08.tooopen.com/20190111/tooopen_sy_175428542870648.jpg" width="200" height="150" /></li>
+    <li>
+        <img src="https://img08.tooopen.com/20200409/tooopen_sy_09430843850508.jpg" width="200" height="150" /></li>
+    <li>
+        <img src="https://img08.tooopen.com/20190510/tooopen_sy_173726372615301.jpg" width="200" height="150" /></li> -->
+    <li><img src="https://picb7.photophoto.cn/03/491/03491637_1.jpg" width="200" height="150" /></li>
+    <li><img src="https://picb0.photophoto.cn/39/329/39329210_1.jpg" width="200" height="150" /></li>
+    <li><img src="https://picb2.photophoto.cn/37/898/37898422_1.jpg" width="200" height="150" /></li>
+    <li><img src="https://pic32.photophoto.cn/20140914/0005018405154000_b.jpg" width="200" height="150" /></li>
+    <li><img src="https://picb2.photophoto.cn/37/241/37241172_1.jpg" width="200" height="150" /></li>
+    
+    <!-- <li>
+        <img src="https://picb4.photophoto.cn/37/532/37532604_1.jpg" width="200" height="150" /></li> -->
+        <!-- <img src = "https://picb1.photophoto.cn/38/628/38628331_1.jpg"> -->
+</ul>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script>
+  var oUl = document.getElementById("oUl");
+  $(".screenCapture").on("click", function(event) {
+        event.preventDefault();
+        html2canvas(oUl,{
+          useCORS: true,
+          allowTaint: true,  
+          taintTest: false,
+        }).then(function(canvas) {
+          document.body.appendChild(canvas);
+          /* 直接显示在当前页面是可以的，但若下载的话，图片无法下载，代码如下：
+          var oCanvas = document.getElementsByTagName('canvas')[0];
+          var dataURL = oCanvas.toDataURL('image/jpeg', 1.0);
+          download(dataURL); */
+        });
+      }); 
+      /* function download(dataURL) {
+        var a = document.createElement('a');
+        document.body.appendChild(a);
+        a.innerHTML = '下载按钮';
+        a.download = 'downloadCanvasImage.png';
+        a.href = dataURL;
+        a.click();
+      }; */
+
+</script>
+  
+</body>
+</html>

@@ -15,9 +15,9 @@
         
         #ul1
         {
-            width: 660px;
+            /* width: 660px; */
             position: relative;
-            margin: 10px auto;
+            /* margin: 10px auto; */
         }
         #ul1 li
         {
@@ -92,6 +92,9 @@
           //当鼠标拖动时计算div的位置
           var l = event.clientX - disX + scrollLeft;
           var t = event.clientY - disY + scrollTop;
+          // 下方两行是边界判断，浏览器左侧和上方不能拖拽出界(因为即使拖出去也不能显示)。
+          l = l <= 0 ? 0 : l;
+          t  = t <= 0 ? 0 : t;
           obj.style.left = l + "px";
           obj.style.top = t + "px";
           for(var i=0;i<aLi.length;i++){

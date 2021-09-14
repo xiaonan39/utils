@@ -77,17 +77,54 @@ var Method=(function () {
           },[]);
       },
 
-      // 数组对象排序,array.sort(Method.arrayObjSort)；按key值从小到大排序，key应该是要可以随意变化的，但目前不能
-      arrayObjSort(sort1,sort2) {
-          var val1 = sort1.key;
-          var val2 = sort2.key;
-          if (val1 < val2) {
-              return -1;
-          }else if (val1 > val2) {
+      // 数组对象排序,array.sort(Method.arrayObjSort)；（升序asc，降序desc），key是要可以随意变化的。null升序中为最小，降序中为最大
+      arrayObjSort(type,sort) {//麻烦版
+        console.log(type,sort);
+        return function(sort1,sort2) {
+          /* var val1 = sort1[type];
+          var val2 = sort2[type]; */
+          if(sort === 'desc') {//降序(从大到小)
+            var val1 = sort1[type];
+            var val2 = sort2[type];
+            if(val1 === null || val2 === null) {
               return 1;
-          } else {
+            }
+            else if (val1 < val2) {
+              return 1;
+            }
+            else if(val1 > val2) {
+              return -1;
+            }
+            else {
               return 0;
+            }
           }
+          else {
+            //升序(从小到大)
+            var val1 = sort1[type];
+            var val2 = sort2[type];
+            if (val1 < val2) {
+              return -1;
+            }
+            else if(val1 > val2) {
+              return 1;
+            }
+            else {
+              return 0;
+            }
+          }
+        };
+      },
+      
+      arrayObjSortSimple(type,sort) {
+        return function(a,b) {
+          if(sort === 'desc') {
+            return b[type] - a[type];
+          }
+          else {
+            return a[type] - b[type];
+          }
+        }
       },
       // 判断是否为数字,一位或者多位
       isNumber(value) {

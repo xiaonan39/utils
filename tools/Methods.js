@@ -79,7 +79,6 @@ var Method=(function () {
 
       // 数组对象排序,array.sort(Method.arrayObjSort)；（升序asc，降序desc），key是要可以随意变化的。null升序中为最小，降序中为最大
       arrayObjSort(type,sort) {//麻烦版
-        console.log(type,sort);
         return function(sort1,sort2) {
           /* var val1 = sort1[type];
           var val2 = sort2[type]; */
@@ -116,6 +115,7 @@ var Method=(function () {
         };
       },
       
+      // 使用：array.sort(Method.arrayObjSortSimple('排序的属性','desc'))
       arrayObjSortSimple(type,sort) {
         return function(a,b) {
           if(sort === 'desc') {
@@ -129,8 +129,14 @@ var Method=(function () {
       // 判断是否为数字,一位或者多位
       isNumber(value) {
           return /^\d+$/.test(value);
-      }
+      },
 
+      // 数组对象随着数组排序 Method.arrobjWithArrSort(数组, 对象, 'type' )
+      arrobjWithArrSort(arr, obj, type) {
+        return obj.sort((a,b) => {
+          return arr.indexOf(a[type]) - arr.indexOf(b[type]);
+        });
+      }
 
   };
 })();
